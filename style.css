@@ -1,0 +1,235 @@
+:root {
+    --primary: #4285F4;
+    --secondary: #34A853;
+    --danger: #EA4335;
+    --warning: #FBBC05;
+    --purple: #673AB7;
+    --orange: #FF5722;
+    
+    --bg: #f5f7fa;
+    --text: #333;
+    --card: #fff;
+    --border: #e0e0e0;
+    --input: #fff;
+}
+
+[data-theme="dark"] {
+    --bg: #1a1a1a;
+    --text: #f0f0f0;
+    --card: #2d2d2d;
+    --border: #444;
+    --input: #333;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    transition: background 0.3s, color 0.3s;
+}
+
+body {
+    font-family: 'Segoe UI', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+}
+
+.app-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    min-height: 100vh;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid var(--border);
+}
+
+h1, h2 {
+    color: var(--primary);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.header-actions {
+    display: flex;
+    gap: 10px;
+}
+
+button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 4px;
+}
+
+.primary {
+    background: var(--primary);
+    color: white;
+}
+
+.habit-form {
+    margin-bottom: 20px;
+    background: var(--card);
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+input, select {
+    padding: 10px;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    background: var(--input);
+    color: var(--text);
+    width: 100%;
+}
+
+.form-row {
+    display: flex;
+    gap: 10px;
+}
+
+.form-row select {
+    flex: 1;
+}
+
+.habit-filters {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.habit-filters select {
+    flex: 1;
+}
+
+.habits-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.habit-item {
+    background: var(--card);
+    padding: 15px;
+    border-radius: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.habit-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex: 1;
+}
+
+.habit-color {
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+}
+
+.habit-text {
+    flex: 1;
+}
+
+.habit-text.completed {
+    text-decoration: line-through;
+    opacity: 0.7;
+}
+
+.habit-actions {
+    display: flex;
+    gap: 5px;
+}
+
+.complete-btn.completed {
+    color: var(--secondary);
+}
+
+.delete-btn {
+    color: var(--danger);
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.5);
+    z-index: 100;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background: var(--card);
+    padding: 20px;
+    border-radius: 8px;
+    width: 90%;
+    max-width: 500px;
+    position: relative;
+}
+
+.close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+.creator {
+    margin-top: 20px;
+    padding-top: 10px;
+    border-top: 1px solid var(--border);
+    text-align: center;
+}
+
+/* Cores das categorias */
+.category-study { background: var(--primary); }
+.category-reading { background: var(--danger); }
+.category-tasks { background: var(--warning); }
+.category-reminders { background: var(--secondary); }
+.category-fitness { background: var(--purple); }
+.category-daily { background: var(--orange); }
+
+@media (max-width: 600px) {
+    .form-row {
+        flex-direction: column;
+    }
+    
+    .habit-filters {
+        flex-direction: column;
+    }
+    
+    .habit-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+    
+    .habit-actions {
+        align-self: flex-end;
+    }
+}

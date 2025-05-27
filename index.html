@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Organizador de Hábitos</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app-container">
+        <header>
+            <h1><i class="fas fa-tasks"></i> Organizador</h1>
+            <div class="header-actions">
+                <button id="theme-toggle" title="Alternar tema">
+                    <i class="fas fa-moon"></i>
+                </button>
+                <button id="about-btn" title="Sobre">
+                    <i class="fas fa-info-circle"></i>
+                </button>
+            </div>
+        </header>
+
+        <main>
+            <section class="habit-form">
+                <div class="form-group">
+                    <input type="text" id="habit-input" placeholder="Adicione um novo hábito...">
+                    <div class="form-row">
+                        <select id="habit-category">
+                            <option value="study">Estudo</option>
+                            <option value="reading">Leitura</option>
+                            <option value="tasks">Tarefas</option>
+                            <option value="reminders">Lembretes</option>
+                            <option value="fitness">Atividade Física</option>
+                            <option value="daily">Cotidianas</option>
+                        </select>
+                        <button id="add-habit-btn" class="primary">
+                            <i class="fas fa-plus"></i> Adicionar
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <section class="habit-filters">
+                <select id="category-filter">
+                    <option value="all">Todas categorias</option>
+                    <option value="study">Estudo</option>
+                    <option value="reading">Leitura</option>
+                    <option value="tasks">Tarefas</option>
+                    <option value="reminders">Lembretes</option>
+                    <option value="fitness">Atividade Física</option>
+                    <option value="daily">Cotidianas</option>
+                </select>
+                <select id="status-filter">
+                    <option value="all">Todos</option>
+                    <option value="completed">Concluídos</option>
+                    <option value="pending">Pendentes</option>
+                </select>
+            </section>
+
+            <section class="habits-list">
+                <h2><i class="fas fa-list-check"></i> Seus Hábitos</h2>
+                <div id="habits-container" class="habits-container">
+                    <!-- Hábitos serão carregados aqui -->
+                </div>
+            </section>
+        </main>
+
+        <div id="about-modal" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <h2><i class="fas fa-info-circle"></i> Sobre o Organizador</h2>
+                <p>Aplicativo para gerenciamento de hábitos diários.</p>
+                <p><strong>Recursos:</strong></p>
+                <ul>
+                    <li>Adicionar hábitos com categorias</li>
+                    <li>Marcar como concluído</li>
+                    <li>Temas claro e escuro</li>
+                    <li>Filtros por categoria e status</li>
+                </ul>
+                <p class="creator">Criado por: Gledison Arruda Andrade</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
