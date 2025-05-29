@@ -10,10 +10,16 @@ document.addEventListener('DOMContentLoaded', function() {
     const aboutBtn = document.getElementById('about-btn');
     const aboutModal = document.getElementById('about-modal');
     const closeButtons = document.querySelectorAll('.close');
+    const editModal = document.getElementById('edit-modal');
+    const editHabitText = document.getElementById('edit-habit-text');
+    const editHabitCategory = document.getElementById('edit-habit-category');
+    const editHabitNotes = document.getElementById('edit-habit-notes');
+    const saveEditBtn = document.getElementById('save-edit-btn');
     
     // Variáveis de estado
     let habits = JSON.parse(localStorage.getItem('habits')) || [];
     let currentTheme = localStorage.getItem('theme') || 'light';
+    let currentEditingHabit = null;
     
     // Inicialização
     initTheme();
@@ -29,15 +35,18 @@ document.addEventListener('DOMContentLoaded', function() {
     statusFilter.addEventListener('change', renderHabits);
     themeToggle.addEventListener('click', toggleTheme);
     aboutBtn.addEventListener('click', () => aboutModal.style.display = 'flex');
+    saveEditBtn.addEventListener('click', saveEditedHabit);
     
     closeButtons.forEach(btn => {
         btn.addEventListener('click', function() {
             aboutModal.style.display = 'none';
+            editModal.style.display = 'none';
         });
     });
     
     window.addEventListener('click', function(e) {
         if (e.target === aboutModal) aboutModal.style.display = 'none';
+        if (e.target === editModal) editModal.style.display = 'none';
     });
     
     // Funções
@@ -66,7 +75,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 text,
                 category,
                 completed: false,
-                createdAt: new Date().toISOString()
+                createdAt: new Date().toISOString(),
+                notes: null
             };
             
             habits.unshift(newHabit);
@@ -106,9 +116,20 @@ document.addEventListener('DOMContentLoaded', function() {
             habitEl.innerHTML = `
                 <div class="habit-info">
                     <div class="habit-color category-${habit.category}"></div>
-                    <span class="habit-text ${habit.completed ? 'completed' : ''}">${habit.text}</span>
+                    <div class="habit-text-container">
+                        <span class="habit-text ${habit.completed ? 'completed' : ''}">${habit.text}</span>
+                        ${habit.notes ? `
+                            <div class="habit-notes">
+                                <i class="fas fa-sticky-note habit-notes-icon" data-id="${habit.id}"></i>
+                                ${habit.notes}
+                            </div>
+                        ` : ''}
+                    </div>
                 </div>
                 <div class="habit-actions">
+                    <button class="edit-btn" data-id="${habit.id}" title="Editar">
+                        <i class="fas fa-edit"></i>
+                    </button>
                     <button class="complete-btn ${habit.completed ? 'completed' : ''}" data-id="${habit.id}">
                         <i class="fas fa-${habit.completed ? 'check-circle' : 'circle'}"></i>
                     </button>
@@ -135,6 +156,20 @@ document.addEventListener('DOMContentLoaded', function() {
                 deleteHabit(id);
             });
         });
+        
+        document.querySelectorAll('.edit-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const id = parseInt(this.getAttribute('data-id'));
+                openEditModal(id);
+            });
+        });
+        
+        document.querySelectorAll('.habit-notes-icon').forEach(icon => {
+            icon.addEventListener('click', function() {
+                const id = parseInt(this.getAttribute('data-id'));
+                openEditModal(id);
+            });
+        });
     }
     
     function toggleComplete(id) {
@@ -154,6 +189,44 @@ document.addEventListener('DOMContentLoaded', function() {
             habits = habits.filter(habit => habit.id !== id);
             saveHabits();
             renderHabits();
+        }
+    }
+    
+    function openEditModal(id) {
+        const habit = habits.find(h => h.id === id);
+        if (habit) {
+            currentEditingHabit = habit;
+            editHabitText.value = habit.text;
+            editHabitCategory.value = habit.category;
+            editHabitNotes.value = habit.notes || '';
+            editModal.style.display = 'flex';
+        }
+    }
+    
+    function saveEditedHabit() {
+        if (currentEditingHabit) {
+            const text = editHabitText.value.trim();
+            const category = editHabitCategory.value;
+            const notes = editHabitNotes.value.trim();
+            
+            if (text) {
+                habits = habits.map(habit => {
+                    if (habit.id === currentEditingHabit.id) {
+                        return {
+                            ...habit,
+                            text,
+                            category,
+                            notes: notes || null
+                        };
+                    }
+                    return habit;
+                });
+                
+                saveHabits();
+                renderHabits();
+                editModal.style.display = 'none';
+                currentEditingHabit = null;
+            }
         }
     }
     
